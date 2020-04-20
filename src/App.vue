@@ -4,7 +4,7 @@
       <div class="navbar">
         <a class="logo">sdtbu OJ</a>
         <label for="toggle-nav">
-          <i class="el-icon-s-fold"/>
+          <p>选项</p>
         </label>
         <input type="checkbox" id="toggle-nav"/>
         <div class="collapse">
@@ -30,9 +30,13 @@
     </div>
     <!--路由占位符-->
     <keep-alive>
-      <router-view v-if="$route.meta.keepAlive"/>
+      <v-app>
+        <router-view v-if="$route.meta.keepAlive"/>
+      </v-app>
     </keep-alive>
-    <router-view v-if="!$route.meta.keepAlive"/>
+    <v-app>
+      <router-view v-if="!$route.meta.keepAlive"/>
+    </v-app>
   </div>
 </template>
 
@@ -87,7 +91,7 @@
       ...mapGetters(['getNickname'])
     },
     methods: {
-      
+
     },
   }
 </script>
