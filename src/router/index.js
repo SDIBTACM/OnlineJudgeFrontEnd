@@ -16,6 +16,7 @@ const routes = [
         path: '/onlineJudge',
         name: 'OnlineJudge',
         component: () => import('../views/OnlineJudge'),
+        props: (route) => ({page: parseInt(route.query.page)}),
         meta: {
             title: '题库'
         }
@@ -25,9 +26,9 @@ const routes = [
         name: 'Problem',
         component: () => import('../views/ProblemDetail'),
         props: true,
-        meta: {
-            title: '题目详情'
-        }
+        // meta: {
+        //     title: '题目详情'
+        // }
     },
     {
         path: '/about',
@@ -76,9 +77,17 @@ const routes = [
             next()
         },
         meta: {
-            title: '用户信息'
+            title: '个人信息'
         },
 
+    },
+    // 捕获非法路径
+    {
+        path: '*',
+        component: () => import('../views/Notfound'),
+        meta: {
+            title: '404'
+        }
     }
 ]
 
