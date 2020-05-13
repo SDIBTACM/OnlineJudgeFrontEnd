@@ -1,5 +1,7 @@
 # onlinejudgefrontend
 
+Will use nuxt.js soon
+
 ## Project setup
 ```
 npm install
