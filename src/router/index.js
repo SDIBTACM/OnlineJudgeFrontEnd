@@ -39,6 +39,14 @@ const routes = [
         }
     },
     {
+        path: '/contest',
+        name: 'Contest',
+        component: () => import('../views/Contest'),
+        meta: {
+            title: '竞赛'
+        }
+    },
+    {
         path: '/rankList',
         name: 'RankList',
         component: () => import('../views/RankList'),
@@ -76,9 +84,10 @@ const routes = [
         },
     },
     {
-        path: '/user',
+        path: '/user/:username',
         name: 'User',
         component: () => import('../views/User'),
+        props: (route) => ({getUsername: route.params.username}),
         beforeEnter: (to, from, next) => {
             if(!window.localStorage.getItem('username')) {
                 return next('/')
@@ -102,7 +111,7 @@ const routes = [
 
 const router = new VueRouter({
     routes,
-    mode: 'history',
+    // mode: 'history',
 })
 
 // 跟随页面修改标题
