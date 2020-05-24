@@ -2,10 +2,16 @@
     <div id="login-log">
         <div class="log-des">
             <div>
-                登陆地：<span>{{logItem.ip}}</span>
+                IP:<span>{{logItem.ip}}</span>
             </div>
             <div>
-                时间：<span>{{format(parseInt(logItem.createAt))}}</span>
+                登入:<span>{{format(parseInt(logItem.createAt))}}</span>
+            </div>
+            <div>
+                登出:<span>{{format(parseInt(logItem.logoutTime))}}</span>
+            </div>
+            <div>
+                登录时长:<span>{{toHMS(parseInt(logItem.logoutTime) - logItem.createAt)}}</span>
             </div>
         </div>
     </div>
@@ -13,6 +19,7 @@
 
 <script>
     import {formatDate} from "@/assets/formatDate";
+    import {MilltoHMS} from "../assets/formatDate";
 
     export default {
         name: "LoginLog",
@@ -22,6 +29,9 @@
         methods: {
             format(date) {
                 return formatDate(date)
+            },
+            toHMS(mss) {
+                return MilltoHMS(mss)
             }
         }
     }
@@ -43,7 +53,9 @@
             span:nth-of-type(1) {
                 color: #9d9d9d;
                 display: inline-block;
-                width: 12em;
+                width: auto;
+                margin-right: 3em;
+                margin-left: 0.5em;
             }
             span:nth-of-type(2) {
                 color: #9d9d9d;

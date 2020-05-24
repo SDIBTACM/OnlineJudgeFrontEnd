@@ -198,6 +198,7 @@
                     }
                     this.id = res.data.id
                     this.createAt = formatDate(res.data.createAt)
+                    this.logoutTime = formatDate(res.data.logoutTime)
                     this.updateAt = formatDate(res.data.updateAt)
                     this.infoForm.email = res.data.email
                     this.infoForm.nickname = res.data.nickname
@@ -301,7 +302,6 @@
 <style lang="less" scoped>
     #user {
         margin-top: 100px;
-
         .user-info-card {
             padding: 20px;
             width: 60%;
