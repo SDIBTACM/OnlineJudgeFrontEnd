@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
+import {getStorage} from "@/assets/config/storage";
 
 Vue.use(VueRouter)
 
@@ -61,10 +63,10 @@ const routes = [
         name: 'Login',
         component: () => import('../views/Login.vue'),
         beforeEnter: (to, from, next) => {
-          if(window.sessionStorage.getItem('username')) {
-              return next('/')
-          }
-          next()
+            if (getStorage('username')) {
+                return next('/')
+            }
+            next()
         },
         meta: {
             title: '登录',
@@ -75,7 +77,7 @@ const routes = [
         name: 'Register',
         component: () => import('../views/Register'),
         beforeEnter: (to, from, next) => {
-            if(window.sessionStorage.getItem('username')) {
+            if (getStorage('username')) {
                 return next('/')
             }
             next()
@@ -101,14 +103,40 @@ const routes = [
 
     },
     {
+        path: '/history',
+        name: 'History',
+        component: () => import('../views/SubmitHistory'),
+        props: (route) => ({
+            page: parseInt(route.query.page),
+            ownerId: route.query.ownerId,
+            lang: route.query.lang,
+            problemId: route.query.problemId,
+            result: route.query.result,
+            similarPercent: route.query.similarPercent
+        }),
+        meta: {
+            title: '提交记录'
+        }
+    },
+    {
         path: "/admin",
-        name: "Admin",
         component: () => import('../views/Admin'),
+        beforeEnter: (to, from, next) => {
+            store.commit('auth/changeRole')
+            if (store.getters['auth/getUserRole'] !== 'ADMIN') {
+                return next('/')
+            }
+            next()
+        },
         children: [
+            {
+                path: '/',
+                redirect: 'personCount'
+            },
             {
                 path: 'personCount',
                 name: 'PersonCount',
-                component: resolve => require(['@/components/Admin/AdminPersonCount'],resolve),
+                component: resolve => require(['@/components/Admin/AdminPersonCount'], resolve),
                 meta: {
                     title: '在线用户'
                 },
@@ -116,7 +144,7 @@ const routes = [
             {
                 path: 'uploadProblem',
                 name: 'UploadProblem',
-                component: resolve => require(['@/components/Admin/AdminUploadProblem'],resolve),
+                component: resolve => require(['@/components/Admin/AdminUploadProblem'], resolve),
                 meta: {
                     title: '上传题目'
                 },
@@ -124,12 +152,12 @@ const routes = [
             {
                 path: 'createContest',
                 name: 'CreateContest',
-                component: resolve => require(['@/components/Admin/AdminCreateContest'],resolve),
+                component: resolve => require(['@/components/Admin/AdminCreateContest'], resolve),
                 meta: {
                     title: '创建比赛'
                 },
             },
-        ]
+        ],
     },
     {
         path: '/contest-detail/:id',
@@ -154,6 +182,7 @@ const router = new VueRouter({
 })
 
 // 跟随页面修改标题
+// todo:页面被拦截不修改标题
 router.beforeEach((to, from, next) => {
 
     if (to.meta.title) {

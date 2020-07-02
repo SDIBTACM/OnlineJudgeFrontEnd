@@ -3,7 +3,7 @@ export const navCase =
     [
         {id: 1, links: '/', show: '首页'},
         {id: 2, links: '/onlineJudge?page=1', show: '题库'},
-        {id: 3, links: '/history', show: '历史'},
+        {id: 3, links: '/history?page=1', show: '提交记录'},
         {id: 4, links: '/contest?page=1', show: '竞赛'},
         {id: 5, links: '/rankList?page=1', show: '排名'},
         {id: 6, links: '/about', show: 'ABOUT'}
@@ -17,7 +17,7 @@ export const adminMenu =
         {title: '创建比赛', icon: 'fa-plus', link: 'createContest'},
     ]
 
-// admin 上传文件示例
+// admin 上传问题示例
 export const problemExample =
     {
             description: "",
@@ -35,3 +35,7 @@ export const problemExample =
     };
 export const problemExampleType =
     ['NORMAL','SUPPLEMENT_AFTER_SUBMIT_CODE','SUPPLEMENT_BEFORE_JUDGE']
+
+// 支持语言列表
+export const languageList =
+    ['C_11', 'C_98', 'JAVA_8', 'PYTHON_2', 'PYTHON_3']

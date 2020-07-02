@@ -1,20 +1,22 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import load from './modules/load'
+import auth from './modules/auth'
+import {getStorage} from "@/assets/config/storage";
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     username: '',
-    userId: window.sessionStorage.getItem('userId'),
+    userId: getStorage('userId'),
   },
   mutations: {
     changeName(state) {
-      state.username = window.sessionStorage.getItem('username')
+      state.username = getStorage('username')
     },
     changeId(state) {
-      state.userId = window.sessionStorage.getItem('userId')
+      state.userId = getStorage('userId')
     },
   },
   actions: {
@@ -34,6 +36,7 @@ export default new Vuex.Store({
     },
   },
   modules: {
-    load
+    load,
+    auth
   }
 })
